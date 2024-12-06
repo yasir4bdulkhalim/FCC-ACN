@@ -1,0 +1,25 @@
+#include <SoftwareSerial.h>
+
+SoftwareSerial STM_Serial(3, 2); // pin 3 berfungsi sebagai Rx dan 2 sebagai Tx
+
+
+void setup() {
+  Serial.begin(9600);
+  STM_Serial.begin(9600);
+  
+}
+
+void loop() {
+  if(Serial.available() > 0 ){    // Baca data dari serial monitor
+    char input = Serial.read();
+    STM_Serial.write(input);           // Kirim data ke STM32 melalui UART 
+    
+  }
+
+
+  if(STM_Serial.available() > 0){
+    String pesan = STM_Serial.readStringUntil('\n');
+    Serial.print("STM32 :");
+    Serial.println(pesan);
+  }
+}
