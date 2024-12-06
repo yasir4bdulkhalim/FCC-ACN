@@ -1,0 +1,54 @@
+#include <Wire.h>
+
+void setup() {
+    Wire.begin(); // Inisialisasi I2C sebagai master
+    Serial.begin(9600); // Untuk debug di Serial Monitor
+}
+
+void loop() {
+  // Jika kita mengetik '1' di Serial Monitor
+  if (Serial.available() > 0 ){
+    if(Serial.read() == '1') {
+      Wire.beginTransmission(20); // Alamat slave STM32 
+      Wire.write("Halo STM32"); // Pesan yang dikirim
+      Wire.endTransmission();
+      
+      // Tunggu dan baca umpan balik dari STM32
+      delay(100);
+      Wire.requestFrom(20, 13); // Baca 13 byte dari STM32
+      while (Wire.available()) {
+          char c = Wire.read();
+          Serial.print(c); // Tampilkan feedback
+        }
+      Serial.println();
+    }
+    else if(Serial.read() == '2') {
+      Wire.beginTransmission(21); // Alamat slave STM32 
+      Wire.write("Halo STM32"); // Pesan yang dikirim
+      Wire.endTransmission();
+      
+      // Tunggu dan baca umpan balik dari STM32
+      delay(100);
+      Wire.requestFrom(21, 13); // Baca 13 byte dari STM32
+      while (Wire.available()) {
+          char c = Wire.read();
+          Serial.print(c); // Tampilkan feedback
+        }
+      Serial.println();
+    }
+    else if(Serial.read() == '3') {
+      Wire.beginTransmission(22); // Alamat slave STM32 
+      Wire.write("Halo STM32"); // Pesan yang dikirim
+      Wire.endTransmission();
+      
+      // Tunggu dan baca umpan balik dari STM32
+      delay(100);
+      Wire.requestFrom(22, 13); // Baca 13 byte dari STM32
+      while (Wire.available()) {
+          char c = Wire.read();
+          Serial.print(c); // Tampilkan feedback
+        }
+      Serial.println();
+    } 
+  }
+}
